@@ -25,26 +25,20 @@ html, body {
   z-index: -2;
 }
 
-.background img,
-.background video {
+.background .bg {
   position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  animation: fade 30s infinite;
+  object-fit: cover; /* FULL SCREEN ALWAYS */
   opacity: 0;
+  transition: opacity 1s ease-in-out;
 }
 
-.background img:nth-child(1) { animation-delay: 0s; }
-.background img:nth-child(2) { animation-delay: 10s; }
-.background video:nth-child(3) { animation-delay: 20s; }
-
-@keyframes fade {
-  0% { opacity: 0; }
-  10% { opacity: 1; }
-  30% { opacity: 1; }
-  40% { opacity: 0; }
+.background .bg.active {
+  opacity: 1;
 }
+
 
 /* ===== Overlay ===== */
 .overlay {
@@ -130,14 +124,30 @@ footer {
 </head>
 
 <body>
+<script>
+const images = document.querySelectorAll(".bg");
+let current = 0;
 
+setInterval(() => {
+  images[current].classList.remove("active");
+  current = (current + 1) % images.length;
+  images[current].classList.add("active");
+}, 3000);
+</script>
 <!-- Background -->
 <div class="background">
-  <!-- Replace these with your own -->
-  <img src="photo1.jpg">
-  <img src="photo2.jpg">
-  <video src="video1.mp4" autoplay muted loop></video>
+  <img src="photo1.jpg" class="bg active">
+  <img src="photo2.jpg" class="bg">
+  <img src="photo3.jpg" class="bg">
+  <img src="photo4.jpg" class="bg">
+  <img src="photo5.jpg" class="bg">
+  <img src="photo6.jpg" class="bg">
+  <img src="photo7.jpg" class="bg">
+  <img src="photo8.jpg" class="bg">
+  <img src="photo9.jpg" class="bg">
+  <img src="photo10.jpg" class="bg">
 </div>
+
 
 <div class="overlay"></div>
 
@@ -178,6 +188,7 @@ yesBtn.addEventListener("click", () => {
     createFalling();
   }
 });
+
 
 function createFalling() {
   const items = ["💍","🌸","🌹","❤️","💖"];
