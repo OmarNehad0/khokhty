@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Will You Be My Valentine?</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ===== Background (photos + videos) ===== */
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+}
+
+.background img,
+.background video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: fade 30s infinite;
+  opacity: 0;
+}
+
+.background img:nth-child(1) { animation-delay: 0s; }
+.background img:nth-child(2) { animation-delay: 10s; }
+.background video:nth-child(3) { animation-delay: 20s; }
+
+@keyframes fade {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  30% { opacity: 1; }
+  40% { opacity: 0; }
+}
+
+/* ===== Overlay ===== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: -1;
+}
+
+/* ===== Content ===== */
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  margin-bottom: 30px;
+}
+
+/* ===== Buttons ===== */
+.buttons {
+  display: flex;
+  gap: 20px;
+}
+
+button {
+  padding: 15px 35px;
+  font-size: 1.2rem;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+#yesBtn {
+  background: linear-gradient(45deg, #ff4d6d, #ff85a1);
+  color: white;
+}
+
+#noBtn {
+  background: #fff;
+  color: #333;
+  position: relative;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* ===== Falling Items ===== */
+.fall {
+  position: fixed;
+  top: -50px;
+  font-size: 30px;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* ===== Footer ===== */
+footer {
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #fff;
+  opacity: 0.8;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background -->
+<div class="background">
+  <!-- Replace these with your own -->
+  <img src="photo1.jpg">
+  <img src="photo2.jpg">
+  <video src="video1.mp4" autoplay muted loop></video>
+</div>
+
+<div class="overlay"></div>
+
+<div class="container">
+  <h1>Khokha… will you be my Valentine? 💖</h1>
+
+  <div class="buttons">
+    <button id="yesBtn">YES 💍</button>
+    <button id="noBtn">NO 🙃</button>
+  </div>
+</div>
+
+<footer>
+  Made by Omar Nehad who loves Khokha so much &lt;3
+</footer>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+
+/* ===== No button escape ===== */
+noBtn.addEventListener("mouseenter", moveButton);
+noBtn.addEventListener("touchstart", moveButton);
+
+function moveButton() {
+  const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+  const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+  noBtn.style.position = "fixed";
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+}
+
+/* ===== Yes button magic ===== */
+yesBtn.addEventListener("click", () => {
+  document.querySelector("h1").innerText = "She said YES 😭💖";
+
+  for (let i = 0; i < 80; i++) {
+    createFalling();
+  }
+});
+
+function createFalling() {
+  const items = ["💍","🌸","🌹","❤️","💖"];
+  const el = document.createElement("div");
+  el.className = "fall";
+  el.innerText = items[Math.floor(Math.random() * items.length)];
+  el.style.left = Math.random() * window.innerWidth + "px";
+  el.style.animationDuration = (Math.random() * 3 + 2) + "s";
+  document.body.appendChild(el);
+
+  setTimeout(() => el.remove(), 5000);
+}
+</script>
+
+</body>
+</html>
